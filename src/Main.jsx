@@ -1,6 +1,8 @@
 import React from "react"
 import Recipie from "./components/Recipe.jsx"
 import Ingredients from "./components/Ingredients.jsx"
+import { getRecipeFromChefClaude } from "./ai"
+
 
 
 export default function Main() {
@@ -13,10 +15,11 @@ export default function Main() {
         setIngredientsList(prevIngredient => [...prevIngredient,newIngredient]) 
     }
     
-    const [isRecipeShown,setRecipeShown] = React.useState(false)
+    const [recipe,setRecipe] = React.useState("")
 
-    function showRecipe (){
-        setRecipeShown(prevShown => !prevShown)
+    async function showRecipe (){
+        const recipeMarkdown = await getRecipeFromChefClaude(ingredientsList)
+        setRecipe(recipeMarkdown)
     }
 
     return (
@@ -34,7 +37,7 @@ export default function Main() {
             {ingredientsList.length > 0 && 
             <Ingredients ingredientsList={ingredientsList}  showRecipie = {showRecipe}/>}
 
-            {isRecipeShown && <Recipie/>}
+            {recipe && <Recipie recipe= {recipe}/>}
 
         </main>
     )
