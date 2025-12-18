@@ -8,19 +8,14 @@ export default function Main() {
     
     const [ingredientsList, setIngredientsList] = React.useState([])
         
-    const ingredientsListItems = ingredientsList.map(ingredientList => (
-        <li key={ingredientList}>{ingredientList}</li>
-    ))
-
-
     function addIngredient(formData) {
         const newIngredient = formData.get("ingredient")
         setIngredientsList(prevIngredient => [...prevIngredient,newIngredient]) 
     }
     
-    const [recipeShown,setRecipeShown] = React.useState(false)
+    const [isRecipeShown,setRecipeShown] = React.useState(false)
 
-    function showRecipie (){
+    function showRecipe (){
         setRecipeShown(prevShown => !prevShown)
     }
 
@@ -36,9 +31,10 @@ export default function Main() {
                 <button>Add ingredient</button>
             </form>
 
-            <Ingredients ingredientsListItems={ingredientsListItems}  showRecipie = {showRecipie}/>
+            {ingredientsList.length > 0 && 
+            <Ingredients ingredientsList={ingredientsList}  showRecipie = {showRecipe}/>}
 
-            <Recipie recipieShown={recipeShown}/>
+            {isRecipeShown && <Recipie/>}
 
         </main>
     )
