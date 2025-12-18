@@ -1,5 +1,5 @@
 import React from "react"
-import Recipie from "./components/Recipie.jsx"
+import Recipie from "./components/Recipe.jsx"
 import Ingredients from "./components/Ingredients.jsx"
 
 
