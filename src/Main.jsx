@@ -1,6 +1,6 @@
 import React from "react"
-import Recipie from "./Recipie.jsx"
-import Ingredients from "./Ingredients.jsx"
+import Recipie from "./components/Recipie.jsx"
+import Ingredients from "./components/Ingredients.jsx"
 
 
 export default function Main() {
