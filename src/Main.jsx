@@ -1,44 +1,43 @@
-import React from "react"
-import Recipie from "./components/Recipe.jsx"
-import Ingredients from "./components/Ingredients.jsx"
-import { getRecipeFromChefClaude } from "./ai"
-
-
+import React from "react";
+import Recipie from "./components/Recipe.jsx";
+import Ingredients from "./components/Ingredients.jsx";
+import { getRecipeFromChefClaude } from "./ai";
 
 export default function Main() {
+  const [ingredientsList, setIngredientsList] = React.useState([]);
 
-    
-    const [ingredientsList, setIngredientsList] = React.useState([])
-        
-    function addIngredient(formData) {
-        const newIngredient = formData.get("ingredient")
-        setIngredientsList(prevIngredient => [...prevIngredient,newIngredient]) 
-    }
-    
-    const [recipe,setRecipe] = React.useState("")
+  function addIngredient(formData) {
+    const newIngredient = formData.get("ingredient");
+    setIngredientsList((prevIngredient) => [...prevIngredient, newIngredient]);
+  }
 
-    async function showRecipe (){
-        const recipeMarkdown = await getRecipeFromChefClaude(ingredientsList)
-        setRecipe(recipeMarkdown)
-    }
+  const [recipe, setRecipe] = React.useState("");
 
-    return (
-        <main>
-            <form action={addIngredient} className="add-ingredient-form">
-                <input
-                    type="text"
-                    placeholder="e.g. oregano"
-                    aria-label="Add ingredient"
-                    name="ingredient"
-                />
-                <button>Add ingredient</button>
-            </form>
+  async function showRecipe() {
+    const recipeMarkdown = await getRecipeFromChefClaude(ingredientsList);
+    setRecipe(recipeMarkdown);
+  }
 
-            {ingredientsList.length > 0 && 
-            <Ingredients ingredientsList={ingredientsList}  showRecipie = {showRecipe}/>}
+  return (
+    <main>
+      <form action={addIngredient} className="add-ingredient-form">
+        <input
+          type="text"
+          placeholder="e.g. oregano"
+          aria-label="Add ingredient"
+          name="ingredient"
+        />
+        <button>Add ingredient</button>
+      </form>
 
-            {recipe && <Recipie recipe= {recipe}/>}
+      {ingredientsList.length > 0 && (
+        <Ingredients
+          ingredientsList={ingredientsList}
+          showRecipie={showRecipe}
+        />
+      )}
 
-        </main>
-    )
+      {recipe && <Recipie recipe={recipe} />}
+    </main>
+  );
 }
