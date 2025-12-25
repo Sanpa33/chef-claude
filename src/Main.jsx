@@ -5,6 +5,7 @@ import { getRecipeFromChefClaude } from "./ai";
 
 export default function Main() {
   const [ingredientsList, setIngredientsList] = React.useState([]);
+  const recipeSection = React.useRef(null)
 
   function addIngredient(formData) {
     const newIngredient = formData.get("ingredient");
@@ -17,6 +18,22 @@ export default function Main() {
     const recipeMarkdown = await getRecipeFromChefClaude(ingredientsList);
     setRecipe(recipeMarkdown);
   }
+
+      /**
+     * Challenge:
+     * Add a new effect that calls `recipeSection.current.scrollIntoView()`
+     * only if recipe is not an empty string and recipeSection.current is not null.
+     * Think carefully about what value(s) you would want to include in
+     * the dependencies array.
+     */
+
+  React.useEffect(() => { 
+    if (recipe && recipeSection.current) {
+      recipeSection.current.scrollIntoView({behavior: "smooth"})
+    }
+  }, [recipe ]);
+
+
 
   return (
     <main>
@@ -32,7 +49,8 @@ export default function Main() {
 
       {ingredientsList.length > 0 && (
         <Ingredients
-          ingredientsList={ingredientsList}
+          ref = {recipeSection}
+          ingredientsList ={ingredientsList}
           showRecipie={showRecipe}
         />
       )}
